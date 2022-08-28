@@ -1,9 +1,11 @@
 <div>
     {{-- Close your eyes. Count to one. That is how long forever feels. --}}
 
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Users') }}
-        </h2>
-    </x-slot>
+    <ul class="list-group w-75 mx-auto mt-3 container-fluid">
+        @foreach ($users as $user)
+            <li class="list-group-item list-group-item-action" wire:click="checkConversation({{ $user->id }})">
+                {{ $user->name }}
+            </li>
+        @endforeach
+    </ul>
 </div>

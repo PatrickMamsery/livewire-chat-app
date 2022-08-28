@@ -1,93 +1,58 @@
 <div>
     {{-- Because she competes with no one, no one can compete with her. --}}
 
-    <div class="chatbox_header">
-        <div class="return">
-            <i class="bi bi-arrow-left"></i>
-        </div>
-        
-        <div class="img_container">
-            <img src="{{ asset('images/avatar.jpg') }}" alt="">
-        </div>
-
-        <div class="name">
-            Patrick
-        </div>
-
-        <div class="info">
-            <div class="info_item">
-                <i class="bi bi-telephone-fill"></i>
+    @if ($selectedConversation)
+        <div class="chatbox_header">
+            <div class="return">
+                <i class="bi bi-arrow-left"></i>
+            </div>
+            
+            <div class="img_container">
+                <img src="https://ui-avatars.com/api/?name={{ $receiverInstance->name }}" alt="">
             </div>
 
-            <div class="info_item">
-                <i class="bi bi-image"></i>
+            <div class="name">
+                {{ $receiverInstance->name }}
             </div>
 
-            <div class="info_item">
-                <i class="bi bi-info-circle-fill"></i>
-            </div> 
-        </div>
-    </div>
-
-    <div class="chatbox_body">
-        <div class="msg_body msg_body_receiver">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim eveniet fugit dolorum quisquam. Cum dignissimos excepturi aperiam error corrupti eveniet beatae, vel in quo dicta aliquid rerum! Incidunt, dolor distinctio!
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim eveniet fugit dolorum quisquam. Cum dignissimos excepturi aperiam error corrupti eveniet beatae, vel in quo dicta aliquid rerum! Incidunt, dolor distinctio!
-
-            <div class="msg_body_footer">
-                <div class="date">
-                    5 hours ago
+            <div class="info">
+                <div class="info_item">
+                    <i class="bi bi-telephone-fill"></i>
                 </div>
 
-                <div class="read">
-                    <i class="bi bi-check"></i>
+                <div class="info_item">
+                    <i class="bi bi-image"></i>
                 </div>
+
+                <div class="info_item">
+                    <i class="bi bi-info-circle-fill"></i>
+                </div> 
             </div>
         </div>
 
-        <div class="msg_body msg_body_me">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim eveniet fugit dolorum quisquam. Cum dignissimos excepturi aperiam error corrupti eveniet beatae, vel in quo dicta aliquid rerum! Incidunt, dolor distinctio!
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim eveniet fugit dolorum quisquam. Cum dignissimos excepturi aperiam error corrupti eveniet beatae, vel in quo dicta aliquid rerum! Incidunt, dolor distinctio!
+        <div class="chatbox_body">
+            @foreach ($messages as $message)
+                <div wire:key='{{ $message->id }}' class="msg_body {{ auth()->id() == $message->sender_id ? "msg_body_me" : "msg_body_receiver" }}">
+                    {{$message->body}}
 
-            <div class="msg_body_footer">
-                <div class="date">
-                    5 hours ago
-                </div>
+                    <div class="msg_body_footer">
+                        <div class="date">
+                            {{ $message->created_at->format('m: i a') }}
+                        </div>
 
-                <div class="read">
-                    <i class="bi bi-check"></i>
+                        <div class="read">
+                            <i class="bi bi-check"></i>
+                        </div>
+                    </div>
                 </div>
-            </div>
+            @endforeach
+
+            
         </div>
 
-        <div class="msg_body msg_body_me">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim eveniet fugit dolorum quisquam. Cum dignissimos excepturi aperiam error corrupti eveniet beatae, vel in quo dicta aliquid rerum! Incidunt, dolor distinctio!
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim eveniet fugit dolorum quisquam. Cum dignissimos excepturi aperiam error corrupti eveniet beatae, vel in quo dicta aliquid rerum! Incidunt, dolor distinctio!
-
-            <div class="msg_body_footer">
-                <div class="date">
-                    5 hours ago
-                </div>
-
-                <div class="read">
-                    <i class="bi bi-check"></i>
-                </div>
-            </div>
+    @else
+        <div class="fs-4 text-center text-primary mt-5">
+            No conversation selected
         </div>
-
-        <div class="msg_body msg_body_me">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim eveniet fugit dolorum quisquam. Cum dignissimos excepturi aperiam error corrupti eveniet beatae, vel in quo dicta aliquid rerum! Incidunt, dolor distinctio!
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim eveniet fugit dolorum quisquam. Cum dignissimos excepturi aperiam error corrupti eveniet beatae, vel in quo dicta aliquid rerum! Incidunt, dolor distinctio!
-
-            <div class="msg_body_footer">
-                <div class="date">
-                    5 hours ago
-                </div>
-
-                <div class="read">
-                    <i class="bi bi-check"></i>
-                </div>
-            </div>
-        </div>
-    </div>
+    @endif
 </div>
